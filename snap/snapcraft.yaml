@@ -1,0 +1,58 @@
+name: appflowy
+version: 0.1.0
+adopt-info: appflowy
+website: https://appflowy.io
+contact: https://github.com/kenvandine/appflowy-snap/issues
+issues: https://github.com/kenvandine/appflowy-snap/issues
+source-code: https://github.com/AppFlowy-IO/AppFlowy
+icon: snap/gui/icon.svg
+confinement: strict
+base: core22
+grade: stable
+license: AGPL-3.0
+
+apps:
+  appflowy:
+    command: opt/AppFlowy/app_flowy
+    extensions: [gnome]
+    desktop: usr/share/applications/appflowy.desktop
+    common-id: io.appflowy.AppFlowy
+    plugs:
+      - network
+      - network-manager-observe
+      - home
+      - removable-media
+
+slots:
+  dbus-appflowy:
+    interface: dbus
+    bus: session
+    name: io.appflowy.AppFlowy
+
+parts:
+  appflowy:
+    plugin: dump
+    source: https://github.com/AppFlowy-IO/AppFlowy/releases/download/$SNAPCRAFT_PROJECT_VERSION/AppFlowy_$SNAPCRAFT_PROJECT_VERSION_ubuntu-20.04.deb
+    parse-info: [usr/share/appdata/io.appflowy.AppFlowy.appdata.xml]
+    build-packages:
+      - wget
+      - dpkg
+    override-pull: |
+      craftctl default
+      sed -i 's|Icon=/opt/AppFlowy/flowy_logo.svg|Icon=${SNAP}/opt/AppFlowy/flowy_logo.svg|' $SNAPCRAFT_PART_SRC/usr/share/applications/appflowy.desktop
+      mkdir -p $SNAPCRAFT_PART_SRC/usr/share/appdata
+      wget -O $SNAPCRAFT_PART_SRC/usr/share/appdata/io.appflowy.AppFlowy.appdata.xml https://raw.githubusercontent.com/flathub/io.appflowy.AppFlowy/master/io.appflowy.AppFlowy.appdata.xml
+    prime:
+      - opt/AppFlowy
+      - usr/share/applications
+      - usr/share/appdata
+ 
+  deps:
+    plugin: dump
+    source: http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+    stage-packages:
+      - libkeybinder-3.0-0
+    prime:
+      - usr/lib/*/libkeybinder*so.*
+      - usr/lib/*/libcrypto.so.*
+      - usr/lib/*/libssl.so.*
