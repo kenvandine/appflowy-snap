@@ -1,5 +1,5 @@
 name: appflowy
-version: 0.1.0
+version: 0.1.5
 adopt-info: appflowy
 website: https://appflowy.io
 contact: https://github.com/kenvandine/appflowy-snap/issues
@@ -13,7 +13,7 @@ license: AGPL-3.0
 
 apps:
   appflowy:
-    command: opt/AppFlowy/app_flowy
+    command: opt/AppFlowy/appFlowy
     extensions: [gnome]
     desktop: usr/share/applications/appflowy.desktop
     common-id: io.appflowy.AppFlowy
