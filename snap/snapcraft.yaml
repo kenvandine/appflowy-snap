@@ -10,6 +10,8 @@ confinement: strict
 base: core22
 grade: stable
 license: AGPL-3.0
+architectures:
+  - build-on: amd64
 
 apps:
   appflowy:
