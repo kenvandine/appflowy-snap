@@ -13,7 +13,7 @@ license: AGPL-3.0
 
 apps:
   appflowy:
-    command: opt/AppFlowy/appFlowy
+    command: opt/AppFlowy/AppFlowy
     extensions: [gnome]
     desktop: usr/share/applications/appflowy.desktop
     common-id: io.appflowy.AppFlowy
